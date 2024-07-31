@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="db_QuestionBank" Class="questionBankDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=db_QuestionBank;Integrated Security=True;Encrypt=False;Trust Server Certificate=True" SettingsObjectName="DAL.Properties.Settings" SettingsPropertyName="db_QuestionBankConnectionString2" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Tbl_Exam" Member="Tbl_Exams">
+    <Type Name="Tbl_Exam">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DateTimeCreateExam" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Grade" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lessionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LogID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_Exam_Tbl_ExamDetali" Member="Tbl_ExamDetalis" ThisKey="ID" OtherKey="ExamID" Type="Tbl_ExamDetali" />
+      <Association Name="Tbl_Lession_Tbl_Exam" Member="Tbl_Lession" ThisKey="lessionID" OtherKey="ID" Type="Tbl_Lession" IsForeignKey="true" />
+      <Association Name="Tbl_Log_Tbl_Exam" Member="Tbl_Log" ThisKey="LogID" OtherKey="ID" Type="Tbl_Log" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_User" Member="Tbl_Users">
+    <Type Name="Tbl_User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Firstname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Lastname" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="Char(11) NOT NULL" CanBeNull="false" />
+      <Column Name="Permission" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LessionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_User_Tbl_Log" Member="Tbl_Logs" ThisKey="ID" OtherKey="UserID" Type="Tbl_Log" />
+      <Association Name="Tbl_Lession_Tbl_User" Member="Tbl_Lession" ThisKey="LessionId" OtherKey="ID" Type="Tbl_Lession" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_ExamDetalis" Member="Tbl_ExamDetalis">
+    <Type Name="Tbl_ExamDetali">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ExamID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Score" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_Exam_Tbl_ExamDetali" Member="Tbl_Exam" ThisKey="ExamID" OtherKey="ID" Type="Tbl_Exam" IsForeignKey="true" />
+      <Association Name="Tbl_Question_Tbl_ExamDetali" Member="Tbl_Question" ThisKey="QuestionID" OtherKey="ID" Type="Tbl_Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_Lession" Member="Tbl_Lessions">
+    <Type Name="Tbl_Lession">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_Lession_Tbl_Exam" Member="Tbl_Exams" ThisKey="ID" OtherKey="lessionID" Type="Tbl_Exam" />
+      <Association Name="Tbl_Lession_Tbl_User" Member="Tbl_Users" ThisKey="ID" OtherKey="LessionId" Type="Tbl_User" />
+      <Association Name="Tbl_Lession_Tbl_Question" Member="Tbl_Questions" ThisKey="ID" OtherKey="lessionID" Type="Tbl_Question" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_Log" Member="Tbl_Logs">
+    <Type Name="Tbl_Log">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DateTimeLogin" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_Log_Tbl_Exam" Member="Tbl_Exams" ThisKey="ID" OtherKey="LogID" Type="Tbl_Exam" />
+      <Association Name="Tbl_User_Tbl_Log" Member="Tbl_User" ThisKey="UserID" OtherKey="ID" Type="Tbl_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_QuestionDetails" Member="Tbl_QuestionDetails">
+    <Type Name="Tbl_QuestionDetail">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDQuestions" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_QuestionDetail_Tbl_TestQuestion" Member="Tbl_TestQuestions" ThisKey="ID" OtherKey="QuestionDetailsID" Type="Tbl_TestQuestion" />
+      <Association Name="Tbl_Question_Tbl_QuestionDetail" Member="Tbl_Question" ThisKey="IDQuestions" OtherKey="ID" Type="Tbl_Question" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_Questions" Member="Tbl_Questions">
+    <Type Name="Tbl_Question">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuestionText" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="DifficultyLevel" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="QuestionType" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Session" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Grade" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lessionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_Question_Tbl_ExamDetali" Member="Tbl_ExamDetalis" ThisKey="ID" OtherKey="QuestionID" Type="Tbl_ExamDetali" />
+      <Association Name="Tbl_Question_Tbl_QuestionDetail" Member="Tbl_QuestionDetails" ThisKey="ID" OtherKey="IDQuestions" Type="Tbl_QuestionDetail" />
+      <Association Name="Tbl_Lession_Tbl_Question" Member="Tbl_Lession" ThisKey="lessionID" OtherKey="ID" Type="Tbl_Lession" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tbl_TestQuestion" Member="Tbl_TestQuestions">
+    <Type Name="Tbl_TestQuestion">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="QuestionDetailsID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Priority" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Tbl_QuestionDetail_Tbl_TestQuestion" Member="Tbl_QuestionDetail" ThisKey="QuestionDetailsID" OtherKey="ID" Type="Tbl_QuestionDetail" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
